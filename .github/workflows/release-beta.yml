@@ -29,7 +29,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-
-      - run: gh release edit v${{ steps.semantic-release.outputs.version }} --draft=false --prerelease
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
