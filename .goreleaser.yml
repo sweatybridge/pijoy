@@ -6,8 +6,8 @@ builds:
       - -trimpath
     ldflags:
       - -s -w
-      - -X github.com/sweatybridge/pijoy/internal/server.version={{.Version}}
-      # - -X github.com/sweatybridge/pijoy/internal/utils.SentryDsn={{ .Env.SENTRY_DSN }}
+      - -X github.com/sweatybridge/pijoy/internal.version={{.Version}}
+      # - -X github.com/sweatybridge/pijoy/internal.SentryDsn={{.Env.SENTRY_DSN}}
     env:
       - CGO_ENABLED=0
     goos:
