@@ -1,0 +1,35 @@
+project_name: pijoy
+builds:
+  - id: pijoy
+    binary: pijoy
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w
+      - -X github.com/sweatybridge/pijoy/internal/server.version={{.Version}}
+      # - -X github.com/sweatybridge/pijoy/internal/utils.SentryDsn={{ .Env.SENTRY_DSN }}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - arm
+    goarm:
+      - 6
+archives:
+  - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ with .Arm }}v{{ . }}{{ end }}{{ with .Mips }}_{{ . }}{{ end }}{{ if not (eq .Amd64 "v1") }}{{ .Amd64 }}{{ end }}'
+release:
+  draft: true
+  replace_existing_draft: true
+  prerelease: auto
+changelog:
+  use: github
+  groups:
+    - title: Features
+      regexp: '^.*?feat(\([[:word:]]+\))??!?:.+$'
+      order: 0
+    - title: "Bug fixes"
+      regexp: '^.*?fix(\([[:word:]]+\))??!?:.+$'
+      order: 1
+    - title: Others
+      order: 999

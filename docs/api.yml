@@ -1,0 +1,98 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: pijoy-api
+  description: API for pijoy
+  contact:
+    name: Qiao Han
+    email: sweatybridge@gmail.com
+    url: https://github.com/sweatybridge
+  license:
+    name: MIT
+    url: https://github.com/sweatybridge/pijoy/blob/main/LICENSE
+servers:
+  - url: http://localhost:8080
+paths:
+  /health:
+    get:
+      description: Returns service version and health status.
+      operationId: getHealth
+      responses:
+        "200":
+          description: health response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Health"
+        default:
+          $ref: "#/components/responses/InternalError"
+components:
+  parameters:
+    limitParam:
+      name: limit
+      in: query
+      description: maximum number of results to return
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 10
+    offsetParam:
+      name: offset
+      in: query
+      description: The number of results to skip
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    InternalError:
+      description: unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+
+  schemas:
+    Health:
+      type: object
+      required:
+        - status
+        - version
+      properties:
+        status:
+          type: string
+          enum:
+            - ready
+            - draining
+        version:
+          type: string
+          example: v1.0.0
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
