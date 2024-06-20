@@ -6,6 +6,7 @@ require (
 	github.com/deepmap/oapi-codegen/v2 v2.1.0
 	github.com/golangci/golangci-lint v1.58.2
 	github.com/labstack/echo/v4 v4.12.0
+	github.com/stianeikeland/go-rpio/v4 v4.6.0
 	github.com/stretchr/testify v1.9.0
 	gotest.tools/gotestsum v1.11.0
 )
