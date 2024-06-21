@@ -7,6 +7,7 @@ require (
 	github.com/go-errors/errors v1.5.1
 	github.com/golangci/golangci-lint v1.58.2
 	github.com/labstack/echo/v4 v4.12.0
+	github.com/oapi-codegen/runtime v1.1.1
 	github.com/stianeikeland/go-rpio/v4 v4.6.0
 	github.com/stretchr/testify v1.9.0
 	golang.org/x/term v0.20.0
@@ -31,6 +32,7 @@ require (
 	github.com/alexkohler/nakedret/v2 v2.0.4 // indirect
 	github.com/alexkohler/prealloc v1.0.0 // indirect
 	github.com/alingse/asasalint v0.0.11 // indirect
+	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect
 	github.com/ashanbrown/forbidigo v1.6.0 // indirect
 	github.com/ashanbrown/makezero v1.1.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -86,6 +88,7 @@ require (
 	github.com/golangci/unconvert v0.0.0-20240309020433-c5143eacb3ed // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 // indirect
+	github.com/google/uuid v1.6.0 // indirect
 	github.com/gordonklaus/ineffassign v0.1.0 // indirect
 	github.com/gostaticanalysis/analysisutil v0.7.1 // indirect
 	github.com/gostaticanalysis/comment v1.4.2 // indirect

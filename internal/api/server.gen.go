@@ -4,7 +4,11 @@
 package api
 
 import (
+	"fmt"
+	"net/http"
+
 	"github.com/labstack/echo/v4"
+	"github.com/oapi-codegen/runtime"
 )
 
 // ServerInterface represents all server handlers.
@@ -12,6 +16,9 @@ type ServerInterface interface {
 
 	// (GET /health)
 	GetHealth(ctx echo.Context) error
+
+	// (POST /joystick/{button})
+	PressJoystick(ctx echo.Context, button Button) error
 }
 
 // ServerInterfaceWrapper converts echo contexts to parameters.
@@ -25,6 +32,22 @@ func (w *ServerInterfaceWrapper) GetHealth(ctx echo.Context) error {
 
 	// Invoke the callback with all the unmarshaled arguments
 	err = w.Handler.GetHealth(ctx)
+	return err
+}
+
+// PressJoystick converts echo context to params.
+func (w *ServerInterfaceWrapper) PressJoystick(ctx echo.Context) error {
+	var err error
+	// ------------- Path parameter "button" -------------
+	var button Button
+
+	err = runtime.BindStyledParameterWithOptions("simple", "button", ctx.Param("button"), &button, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true})
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter button: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.PressJoystick(ctx, button)
 	return err
 }
 
@@ -57,5 +80,6 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	}
 
 	router.GET(baseURL+"/health", wrapper.GetHealth)
+	router.POST(baseURL+"/joystick/:button", wrapper.PressJoystick)
 
 }

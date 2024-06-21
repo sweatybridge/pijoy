@@ -3,8 +3,10 @@ package main
 import (
 	"net"
 
+	"github.com/go-errors/errors"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/stianeikeland/go-rpio/v4"
 	"github.com/sweatybridge/pijoy/internal"
 	"github.com/sweatybridge/pijoy/internal/api"
 )
@@ -19,6 +21,11 @@ func main() {
 }
 
 func start() error {
+	// Open and map memory to access gpio, check for errors
+	if err := rpio.Open(); err != nil {
+		return errors.Errorf("failed to open gpio: %w", err)
+	}
+	defer rpio.Close()
 	// Initialise middleware
 	e := echo.New()
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
@@ -29,7 +36,7 @@ func start() error {
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
 	// Start server
-	handlers := &internal.JoystickServer{}
+	handlers := internal.NewJoystickServer()
 	api.RegisterHandlers(e, handlers)
 	return e.Start(":8080")
 }

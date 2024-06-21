@@ -26,6 +26,22 @@ paths:
                 $ref: "#/components/schemas/Health"
         default:
           $ref: "#/components/responses/InternalError"
+  /joystick/{button}:
+    post:
+      description: Press and release a button on the joystick.
+      operationId: pressJoystick
+      parameters:
+        - name: button
+          in: path
+          description: Type of button to press.
+          required: true
+          schema:
+            $ref: "#/components/schemas/Button"
+      responses:
+        "204":
+          description: The button was pressed successfully.
+        default:
+          $ref: "#/components/responses/InternalError"
 components:
   parameters:
     limitParam:
@@ -70,6 +86,14 @@ components:
             $ref: "#/components/schemas/Error"
 
   schemas:
+    Button:
+      enum:
+        - up
+        - down
+        - left
+        - right
+      type: string
+
     Health:
       type: object
       required:
