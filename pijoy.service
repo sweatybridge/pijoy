@@ -1,0 +1,12 @@
+[Unit]
+Description=PiJoy API server
+
+[Service]
+Type=simple
+User=qh812
+ExecStart=/home/qh812/pijoy
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
