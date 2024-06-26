@@ -19,6 +19,7 @@ type JoystickServer struct {
 
 func NewJoystickServer() *JoystickServer {
 	joystick := &JoystickServer{
+		// TODO: make pin numbers configurable
 		btnToPin: map[api.Button]rpio.Pin{
 			api.Up:    rpio.Pin(12),
 			api.Down:  rpio.Pin(6),
@@ -35,6 +36,7 @@ func NewJoystickServer() *JoystickServer {
 
 // PressJoystick implements api.ServerInterface.
 func (vs *JoystickServer) PressJoystick(ctx echo.Context, button api.Button) error {
+	// TODO: add unit tests for joystick server
 	pin, ok := vs.btnToPin[button]
 	if !ok {
 		return errors.New("Uninitialized button: " + button)
