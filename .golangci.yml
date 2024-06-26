@@ -16,8 +16,7 @@ linters:
     - staticcheck
     - ineffassign
     - unused
-issues:
-  exclude-rules:
-    - linters:
-        - stylecheck
-      text: "ST1003:"
+linters-settings:
+  errcheck:
+    exclude-functions:
+      - golang.org/x/term.Restore
