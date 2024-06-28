@@ -1,34 +1,34 @@
-import createClient from "openapi-fetch";
-import { useState } from "react";
-import { components, paths } from "../api";
+import createClient from 'openapi-fetch'
+import { useState } from 'react'
+import { components, paths } from '../api'
 
-type Button = components["schemas"]["Button"];
+type Button = components['schemas']['Button']
 
 const keyToButton: Record<string, Button> = {
-  ArrowUp: "up",
-  ArrowDown: "down",
-  ArrowLeft: "left",
-  ArrowRight: "right",
-};
+  ArrowUp: 'up',
+  ArrowDown: 'down',
+  ArrowLeft: 'left',
+  ArrowRight: 'right',
+}
 
 const client = createClient<paths>({
-  baseUrl: "http://raspberrypi.local:8080/",
-});
+  baseUrl: import.meta.env.VITE_API_URL,
+})
 
 export default function Joystick(props: React.HTMLAttributes<HTMLDivElement>) {
   const [inflight, setInflight] = useState(
     {} as Record<Button, AbortController>
-  );
+  )
 
   return (
     <div
       {...props}
       onKeyDown={(event) => {
-        const button = keyToButton[event.key];
+        const button = keyToButton[event.key]
         if (button && !(button in inflight)) {
-          const abort = new AbortController();
+          const abort = new AbortController()
           client
-            .POST("/joystick/{button}", {
+            .POST('/joystick/{button}', {
               params: {
                 path: { button },
               },
@@ -36,19 +36,19 @@ export default function Joystick(props: React.HTMLAttributes<HTMLDivElement>) {
             })
             .catch((e) => {
               if (!abort.signal.aborted) {
-                console.error(e);
+                console.error(e)
               }
-            });
-          setInflight({ ...inflight, [button]: abort });
+            })
+          setInflight({ ...inflight, [button]: abort })
         }
       }}
       onKeyUp={(event) => {
-        const button = keyToButton[event.key];
+        const button = keyToButton[event.key]
         if (button && button in inflight) {
-          inflight[button].abort();
-          delete inflight[button];
+          inflight[button].abort()
+          delete inflight[button]
         }
       }}
     />
-  );
+  )
 }
