@@ -15,9 +15,10 @@ export default function Player({
       video: playerRef.current!,
       iceServers: [{ urls: 'stun:stun.cloudflare.com:3478' }],
       type: 'whep',
+      mediaConstraints: { videoOnly: true },
     })
     // TODO: retry until successfully connects to stream
-    player.load(channelUrl).catch((e) => console.error(e))
+    player.load(channelUrl)
     return () => {
       player.destroy()
     }
