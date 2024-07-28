@@ -1,10 +1,10 @@
 [Unit]
-Description=PiJoy API server
+Description=PiJoy WebCam server
 
 [Service]
 Type=simple
 User=qh812
-ExecStart=/home/qh812/pijoy
+ExecStart=/home/qh812/pijoy/webcam
 Restart=always
 RestartSec=3
 

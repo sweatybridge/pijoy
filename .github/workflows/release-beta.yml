@@ -4,10 +4,25 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
+    tags:
+      - v*.*.*
 
 jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      published: ${{ steps.semantic.outputs.new_release_published }}
+      git_tag: ${{ steps.semantic.outputs.new_release_git_tag || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: semantic
+        if: github.ref_type == 'branch'
+        uses: cycjimmy/semantic-release-action@v4
+
   release:
+    needs:
+      - version
+    if: github.ref_type == 'tag' || needs.version.outputs.published == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -21,11 +36,14 @@ jobs:
           go-version-file: go.mod
           cache: true
 
-      - id: semantic-release
-        uses: go-semantic-release/action@v1
+      - uses: goreleaser/goreleaser-action@v6
         with:
-          hooks: goreleaser
-          prerelease: true
+          distribution: goreleaser
+          version: ~> v2
+          args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+
+      - run: gh release edit ${{ needs.version.outputs.git_tag }} --draft=false --prerelease
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

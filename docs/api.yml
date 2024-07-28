@@ -12,6 +12,7 @@ info:
     url: https://github.com/sweatybridge/pijoy/blob/main/LICENSE
 servers:
   - url: http://localhost:8080
+  - url: http://raspberrypi.local:8080
 paths:
   /health:
     get:
