@@ -53,7 +53,7 @@ jobs:
           go-version-file: go.mod
           cache: true
 
-      - run: go generate
+      - run: go generate cmd/joystick/main.go
       - run: |
           if ! git diff --ignore-space-at-eol --exit-code --quiet internal/api; then
             echo "Detected uncommitted changes after codegen. See status below:"
