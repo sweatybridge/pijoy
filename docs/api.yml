@@ -13,6 +13,7 @@ info:
 servers:
   - url: http://localhost:8080
   - url: http://raspberrypi.local:8080
+  - url: https://shortly-sharing-horse.ngrok-free.app
 paths:
   /health:
     get:
