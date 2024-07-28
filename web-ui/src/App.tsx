@@ -5,10 +5,8 @@ import './App.css'
 function App() {
   return (
     <>
-      <Joystick className="card" tabIndex={-1}>
-        <Player src={import.meta.env.VITE_WHEP_URL} className="video" />
-        <p>Press direction keys to control the claw.</p>
-      </Joystick>
+      <Player src={import.meta.env.VITE_WHEP_URL} className="video" />
+      <Joystick />
     </>
   )
 }
