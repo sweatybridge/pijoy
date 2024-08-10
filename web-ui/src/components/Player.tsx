@@ -17,6 +17,11 @@ export default function Player({
       type: 'whep',
       mediaConstraints: { videoOnly: true },
     })
+    // @ts-expect-error EventEmitter interface is only extended on nodejs
+    player.on('connect-error', () => {
+      const event = new Event('error', { bubbles: true })
+      playerRef.current!.dispatchEvent(event)
+    })
     // TODO: retry until successfully connects to stream
     player.load(channelUrl)
     return () => {

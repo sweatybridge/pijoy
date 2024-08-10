@@ -1,11 +1,20 @@
+import { useState } from 'react'
+import Arcade from './components/Arcade'
 import Joystick from './components/Joystick'
 import Player from './components/Player'
 import './App.css'
 
 function App() {
+  const [fallback, setFallback] = useState('')
   return (
     <>
-      <Player src={import.meta.env.VITE_WHEP_URL} className="video" />
+      <Arcade fallback={fallback}>
+        <Player
+          src={import.meta.env.VITE_WHEP_URL}
+          className="video"
+          onError={() => setFallback('WEBCAM OFFLINE')}
+        />
+      </Arcade>
       <Joystick />
     </>
   )
