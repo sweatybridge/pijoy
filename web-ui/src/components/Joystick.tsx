@@ -111,7 +111,8 @@ export default function Joystick() {
       >
         &rarr;
       </button>
-      <p>Press arrow keys to control the claw.</p>
+      <p>Press arrow keys to move the claw.</p>
+      <p>It will drop automatically after 20 seconds.</p>
     </>
   )
 }

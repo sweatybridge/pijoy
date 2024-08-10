@@ -29,5 +29,5 @@ export default function Player({
     }
   }, [channelUrl])
 
-  return <video autoPlay muted ref={playerRef} {...props} />
+  return <video autoPlay muted playsInline ref={playerRef} {...props} />
 }
