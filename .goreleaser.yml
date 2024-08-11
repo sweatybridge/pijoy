@@ -52,6 +52,23 @@ builds:
       - arm
     goarm:
       - 6
+  - id: webcam
+    main: ./cmd/webcam
+    no_unique_dist_dir: true
+    binary: pizero/webcam
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w
+      - -X github.com/sweatybridge/pijoy/internal.version={{.Version}}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - arm
+    goarm:
+      - 6
 archives:
   - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ with .Arm }}v{{ . }}{{ end }}{{ with .Mips }}_{{ . }}{{ end }}{{ if not (eq .Amd64 "v1") }}{{ .Amd64 }}{{ end }}'
 release:
