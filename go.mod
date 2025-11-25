@@ -11,7 +11,7 @@ require (
 	github.com/oapi-codegen/oapi-codegen/v2 v2.3.0
 	github.com/oapi-codegen/runtime v1.1.2
 	github.com/stianeikeland/go-rpio/v4 v4.6.0
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.1
 	golang.ngrok.com/ngrok v1.13.0
 	golang.org/x/term v0.37.0
 	gotest.tools/gotestsum v1.13.0
